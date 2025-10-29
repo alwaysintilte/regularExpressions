@@ -1,4 +1,3 @@
-// script.js
 class RegexValidator {
     constructor() {
         this.form = document.getElementById('regexForm');
@@ -6,8 +5,8 @@ class RegexValidator {
         this.textInput = document.getElementById('text');
         this.validateBtn = document.getElementById('validateBtn');
         this.resultDiv = document.getElementById('result');
-
         this.initEventListeners();
+        this.hideResult();
     }
 
     initEventListeners() {
@@ -16,7 +15,6 @@ class RegexValidator {
             this.validate();
         });
 
-        // Очистка результатов при изменении входных данных
         [this.patternInput, this.textInput].forEach(input => {
             input.addEventListener('input', () => {
                 this.hideResult();
@@ -28,7 +26,6 @@ class RegexValidator {
         const pattern = this.patternInput.value.trim();
         const text = this.textInput.value;
 
-        // Базовая валидация на клиенте
         if (!pattern) {
             this.showResult('error', 'Ошибка: Регулярное выражение не может быть пустым');
             return;
@@ -56,7 +53,6 @@ class RegexValidator {
             this.displayResult(result);
 
         } catch (error) {
-            console.error('Error:', error);
             this.showResult('error', 'Произошла ошибка при проверке. Попробуйте еще раз.');
         } finally {
             this.setLoading(false);
@@ -77,46 +73,24 @@ class RegexValidator {
 
     showMatchesResult(result) {
         const matches = result.matches;
-        const highlightedText = result.highlightedText || this.textInput.value;
+        const highlightedText = result.highlightedText;
 
-        let html = `
-            <h3>✅ ${result.message}</h3>
-            <div class="matches-count">Найдено совпадений: ${matches.length}</div>
-
-            <div class="matches-list">
-                <h4>Детали совпадений:</h4>
-        `;
-
+        let html = `<h3>${result.message}</h3><div class="matches-list"><h4>Детали совпадений:</h4>`;
         matches.forEach((match, index) => {
-            html += `
-                <div class="match-item">
-                    <strong>#${index + 1}:</strong> Позиция ${match.start}-${match.end} →
-                    "<code>${this.escapeHtml(match.matchedText)}</code>"
-                </div>
-            `;
+            html += `<div class="match-item"><strong>№${index + 1}:</strong> Позиция ${match.start}-${match.end} → ${match.matchedText}</div>`;
         });
-
-        html += `
-            </div>
-
-            <div class="highlighted-text">
-                <h4>Текст с выделенными совпадениями:</h4>
-                <div>${highlightedText}</div>
-            </div>
-        `;
+        html += `</div><div class="highlighted-text"><h4>Текст с выделенными совпадениями:</h4><div>${highlightedText}</div></div>`;
 
         this.showResult('success', html, true);
     }
 
     showResult(type, message, isHtml = false) {
         this.resultDiv.className = `result ${type}`;
-
         if (isHtml) {
             this.resultDiv.innerHTML = message;
         } else {
             this.resultDiv.innerHTML = `<h3>${message}</h3>`;
         }
-
         this.resultDiv.style.display = 'block';
         this.scrollToResult();
     }
@@ -135,7 +109,6 @@ class RegexValidator {
     setLoading(loading) {
         const btnText = this.validateBtn.querySelector('.btn-text');
         const btnLoading = this.validateBtn.querySelector('.btn-loading');
-
         if (loading) {
             btnText.style.display = 'none';
             btnLoading.style.display = 'inline';
@@ -148,29 +121,8 @@ class RegexValidator {
             this.form.classList.remove('loading');
         }
     }
-
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
 }
 
-// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     new RegexValidator();
-});
-
-// Добавляем обработчик для демонстрационных данных
-document.addEventListener('DOMContentLoaded', () => {
-    // Примеры для быстрого тестирования
-    const examples = [
-        { pattern: 'a.b', text: 'acb adb aeb' },
-        { pattern: 'test.*', text: 'test123 testing test' },
-        { pattern: '\\d+', text: 'abc 123 def 456' },
-        { pattern: 'hello', text: 'Hello world hello there' }
-    ];
-
-    // Можно добавить кнопки для примеров, если нужно
-    console.log('Regex Validator loaded. Examples:', examples);
 });

@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Помощник для проверки регулярных выражений</title>
+    <title>Проверка регулярных выражений</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 <div class="container">
     <header>
         <h1>Помощник для проверки регулярных выражений</h1>
-        <p class="subtitle">Проверка регулярных выражений без использования встроенных regex-библиотек</p>
     </header>
 
     <main>
         <form id="regexForm" class="form">
             <div class="form-group">
                 <label for="pattern">Регулярное выражение:</label>
-                <input type="text" id="pattern" name="pattern"
-                       placeholder="Введите регулярное выражение (например: a.b*, test.*)" required>
-                <div class="hint">Поддерживаются: обычные символы, ., *, +, ?, (), \</div>
+                <input type="text" id="pattern" name="pattern" placeholder="Введите регулярное выражение" required>
             </div>
 
             <div class="form-group">
                 <label for="text">Текст для поиска:</label>
-                <textarea id="text" name="text"
-                          placeholder="Введите текст для поиска совпадений"></textarea>
+                <textarea id="text" name="text" placeholder="Введите текст для поиска совпадений"></textarea>
             </div>
 
             <button type="submit" id="validateBtn" class="btn-primary">
@@ -34,14 +30,8 @@
             </button>
         </form>
 
-        <div id="result" class="result" style="display: none;">
-            <!-- Результат будет добавляться динамически -->
-        </div>
+        <div id="result" class="result"></div>
     </main>
-
-    <footer>
-        <p>Инструмент для проверки регулярных выражений &copy; 2024</p>
-    </footer>
 </div>
 
 <script src="scripts/script.js"></script>

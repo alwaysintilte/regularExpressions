@@ -8,9 +8,7 @@ import java.util.Stack;
 
 @Service
 public class RegexParser {
-
     public Result validateAndMatch(String pattern, String text) {
-        // Проверка на пустую строку
         if (pattern == null || pattern.trim().isEmpty()) {
             return new Result(false, "Ошибка: Регулярное выражение не может быть пустым");
         }
@@ -19,13 +17,11 @@ public class RegexParser {
             text = "";
         }
 
-        // Валидация регулярного выражения
         String validationResult = validateRegex(pattern);
         if (!validationResult.equals("VALID")) {
             return new Result(false, "Ошибка в регулярном выражении: " + validationResult);
         }
 
-        // Поиск совпадений
         List<Match> matches = findMatches(pattern, text);
         String highlightedText = highlightMatches(text, matches);
 
@@ -56,30 +52,30 @@ public class RegexParser {
                     continue;
                 }
 
-                // Проверка скобок
                 if (c == '(') {
                     stack.push(c);
-                } else if (c == ')') {
+                }
+                else if (c == ')') {
                     if (stack.isEmpty() || stack.pop() != '(') {
                         return "Непарная закрывающая скобка";
                     }
-                } else if (c == '[') {
+                }
+                /*else if (c == '[') {
                     stack.push(c);
-                } else if (c == ']') {
+                }
+                else if (c == ']') {
                     if (stack.isEmpty() || stack.pop() != '[') {
                         return "Непарная закрывающая квадратная скобка";
                     }
-                }
+                }*/
 
-                // Проверка специальных символов
-                if ("*+?{}".indexOf(c) != -1) {
-                    if (i == 0 || pattern.charAt(i-1) == '|' || pattern.charAt(i-1) == '(') {
+                if ("*+?".indexOf(c) != -1) {
+                    if (i == 0 || "*+?(".indexOf(pattern.charAt(i-1)) != -1) {
                         return "Квантификатор без предшествующего символа: " + c;
                     }
                 }
 
-                // Проверка диапазонов в {}
-                if (c == '{') {
+                /*if (c == '{') {
                     int j = i + 1;
                     while (j < pattern.length() && pattern.charAt(j) != '}') {
                         if (!Character.isDigit(pattern.charAt(j)) && pattern.charAt(j) != ',') {
@@ -90,7 +86,7 @@ public class RegexParser {
                     if (j == pattern.length()) {
                         return "Незакрытая фигурная скобка";
                     }
-                }
+                }*/
             }
 
             if (!stack.isEmpty()) {
@@ -107,7 +103,7 @@ public class RegexParser {
         List<Match> matches = new ArrayList<>();
 
         for (int i = 0; i <= text.length(); i++) {
-            MatchResult result = matchPattern(pattern, text, i);
+            MatchResult result = matchSequence(pattern, text, i, 0);
             if (result.matched && result.length > 0) {
                 matches.add(new Match(i, i + result.length, text.substring(i, i + result.length)));
                 i += result.length - 1;
@@ -115,14 +111,6 @@ public class RegexParser {
         }
 
         return matches;
-    }
-
-    private MatchResult matchPattern(String pattern, String text, int startPos) {
-        if (pattern.isEmpty()) {
-            return new MatchResult(true, 0);
-        }
-
-        return matchSequence(pattern, text, startPos, 0);
     }
 
     private MatchResult matchSequence(String pattern, String text, int textPos, int patternPos) {
@@ -215,7 +203,6 @@ public class RegexParser {
         // Подсчитываем количество повторений
         while (count < max && currentTextPos < text.length()) {
             if (targetChar == '.') {
-                // Любой символ
                 count++;
                 currentTextPos++;
             } else if (text.charAt(currentTextPos) == targetChar) {
@@ -281,8 +268,6 @@ public class RegexParser {
                 .replace("\"", "&quot;")
                 .replace("'", "&#39;");
     }
-
-    // Вспомогательный класс для хранения результатов сопоставления
     private static class MatchResult {
         boolean matched;
         int newTextPos;
