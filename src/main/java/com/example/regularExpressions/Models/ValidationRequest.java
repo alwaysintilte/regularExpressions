@@ -1,4 +1,4 @@
-package com.example.regularExpressions;
+package com.example.regularExpressions.Models;
 
 public class ValidationRequest {
     private String pattern;

@@ -1,4 +1,6 @@
-package com.example.regularExpressions;
+package com.example.regularExpressions.Models;
+import com.example.regularExpressions.Models.Match;
+
 import java.util.List;
 
 public class Result {

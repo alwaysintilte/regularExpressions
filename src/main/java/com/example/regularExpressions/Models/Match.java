@@ -1,4 +1,4 @@
-package com.example.regularExpressions;
+package com.example.regularExpressions.Models;
 public class Match {
     private int start;
     private int end;

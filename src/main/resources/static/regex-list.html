@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Справочник регулярных выражений</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Справочник регулярных выражений</h1>
+        <a href="index.html" class="btn-primary">Вернуться к проверке</a>
+    </header>
+    <main>
+        <table>
+            <thead>
+            <tr>
+                <th>Выражение</th>
+                <th>Описание</th>
+                <th>Пример</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>\</td>
+                <td>Экранирование спецсимвола</td>
+                <td>Регулярка: <code>a\.b</code><br>Текст: <code>a.b a+b aab</code><br>Найдёт: <code>a.b</code></td>
+            </tr>
+            <tr>
+                <td>\A</td>
+                <td>Начало текста</td>
+                <td>Регулярка: <code>\Astart</code><br>Текст: <code>start middle start</code><br>Найдёт: <code>start</code> (только первое)</td>
+            </tr>
+            <tr>
+                <td>\Z</td>
+                <td>Конец текста</td>
+                <td>Регулярка: <code>end\Z</code><br>Текст: <code>start end</code><br>Найдёт: <code>end</code> (только последнее)</td>
+            </tr>
+            <tr>
+                <td>\b</td>
+                <td>Граница слова</td>
+                <td>Регулярка: <code>\bcat\b</code><br>Текст: <code>cat concatenate my cat</code><br>Найдёт: <code>cat</code>, <code>cat</code></td>
+            </tr>
+            <tr>
+                <td>\B</td>
+                <td>Не граница слова</td>
+                <td>Регулярка: <code>\Bcat\B</code><br>Текст: <code>concatenate cat</code><br>Найдёт: <code>cat</code> (в "concatenate")</td>
+            </tr>
+            <tr>
+                <td>\<</td>
+                <td>Начало слова</td>
+                <td>Регулярка: <code>\&lt;start</code><br>Текст: <code>start restart starting</code><br>Найдёт: <code>start</code>, <code>start</code></td>
+            </tr>
+            <tr>
+                <td>\></td>
+                <td>Конец слова</td>
+                <td>Регулярка: <code>end\></code><br>Текст: <code>end friend weekend</code><br>Найдёт: <code>end</code>, <code>end</code></td>
+            </tr>
+            <tr>
+                <td>\d</td>
+                <td>Цифра [0-9]</td>
+                <td>Регулярка: <code>\d\d</code><br>Текст: <code>a12 b3 c456</code><br>Найдёт: <code>12</code>, <code>45</code></td>
+            </tr>
+            <tr>
+                <td>\D</td>
+                <td>Не цифра</td>
+                <td>Регулярка: <code>\D+</code><br>Текст: <code>123abc456</code><br>Найдёт: <code>abc</code></td>
+            </tr>
+            <tr>
+                <td>\w</td>
+                <td>Символ слова A-Z,a-z,0-9</td>
+                <td>Регулярка: <code>\w+</code><br>Текст: <code>hello_world test123!</code><br>Найдёт: <code>hello_world</code>, <code>test123</code></td>
+            </tr>
+            <tr>
+                <td>\W</td>
+                <td>Не символ слова</td>
+                <td>Регулярка: <code>\W+</code><br>Текст: <code>hello!@#world</code><br>Найдёт: <code>!@#</code></td>
+            </tr>
+            <tr>
+                <td>\s</td>
+                <td>Пробельный символ</td>
+                <td>Регулярка: <code>\s+</code><br>Текст: <code>hello   world</code><br>Найдёт: <code>   </code></td>
+            </tr>
+            <tr>
+                <td>\S</td>
+                <td>Не пробельный символ</td>
+                <td>Регулярка: <code>\S+</code><br>Текст: <code>  hello world  </code><br>Найдёт: <code>hello</code>, <code>world</code></td>
+            </tr>
+            <tr>
+                <td>^</td>
+                <td>Начало строки</td>
+                <td>Регулярка: <code>^start</code><br>Текст: <code>start line\nstart again</code><br>Найдёт: <code>start</code> (только в начале)</td>
+            </tr>
+            <tr>
+                <td>$</td>
+                <td>Конец строки</td>
+                <td>Регулярка: <code>end$</code><br>Текст: <code>the endnot end</code><br>Найдёт: <code>end</code> (только в конце строки)</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Любой символ (кроме перевода строки)</td>
+                <td>Регулярка: <code>a.b</code><br>Текст: <code>acb a b axb</code><br>Найдёт: <code>acb</code>, <code>axb</code></td>
+            </tr>
+            <tr>
+                <td>()</td>
+                <td>Группировка / подмаска</td>
+                <td>Регулярка: <code>(abc)+</code><br>Текст: <code>abcabc xyz</code><br>Найдёт: <code>abcabc</code></td>
+            </tr>
+            <tr>
+                <td>*</td>
+                <td>0 или более повторений</td>
+                <td>Регулярка: <code>a*b</code><br>Текст: <code>b ab aab test</code><br>Найдёт: <code>b</code>, <code>ab</code>, <code>aab</code></td>
+            </tr>
+            <tr>
+                <td>+</td>
+                <td>1 или более повторений</td>
+                <td>Регулярка: <code>a+b</code><br>Текст: <code>b ab aab test</code><br>Найдёт: <code>ab</code>, <code>aab</code></td>
+            </tr>
+            <tr>
+                <td>?</td>
+                <td>0 или 1 повторение</td>
+                <td>Регулярка: <code>colou?r</code><br>Текст: <code>color colour</code><br>Найдёт: <code>color</code>, <code>colour</code></td>
+            </tr>
+            <tr>
+                <td>Литералы</td>
+                <td>Обычные символы без спецзначения</td>
+                <td>Регулярка: <code>hello</code><br>Текст: <code>hello world</code><br>Найдёт: <code>hello</code></td>
+            </tr>
+            <tr>
+                <td>[0-9]</td>
+                <td>Любая цифра от 0 до 9</td>
+                <td>Регулярка: <code>[0-9][0-9]</code><br>Текст: <code>12 3 456</code><br>Найдёт: <code>12</code>, <code>45</code></td>
+            </tr>
+            <tr>
+                <td>[abc]</td>
+                <td>Любой символ из списка</td>
+                <td>Регулярка: <code>[abc]+</code><br>Текст: <code>abc cab test</code><br>Найдёт: <code>abc</code>, <code>cab</code></td>
+            </tr>
+            <tr>
+                <td>[^abc]</td>
+                <td>Любой символ кроме указанных</td>
+                <td>Регулярка: <code>[^abc]+</code><br>Текст: <code>abc def xyz</code><br>Найдёт: <code> def xyz</code></td>
+            </tr>
+            <tr>
+                <td>[a-z]</td>
+                <td>Любая строчная латинская буква</td>
+                <td>Регулярка: <code>[a-z]+</code><br>Текст: <code>Hello world</code><br>Найдёт: <code>ello</code>, <code>world</code></td>
+            </tr>
+            <tr>
+                <td>[A-Z]</td>
+                <td>Любая заглавная латинская буква</td>
+                <td>Регулярка: <code>[A-Z][a-z]*</code><br>Текст: <code>Hello World test</code><br>Найдёт: <code>Hello</code>, <code>World</code></td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>

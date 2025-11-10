@@ -1,5 +1,8 @@
-package com.example.regularExpressions;
+package com.example.regularExpressions.Spring;
 
+import com.example.regularExpressions.Models.Result;
+import com.example.regularExpressions.Models.ValidationRequest;
+import com.example.regularExpressions.RegexInstruments.RegexParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
